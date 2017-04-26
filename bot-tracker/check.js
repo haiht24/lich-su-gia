@@ -133,7 +133,7 @@ var cronCheckLazada = function () {
                 try{
                     CrawlGetData.queue(data);
                 }catch (err){
-                    console.log('Haiht, this is error: ' + err);
+                    throw new Error(err);
                 }
 
             }
