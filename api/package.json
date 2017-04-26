@@ -1,0 +1,16 @@
+{
+  "name": "nodejs-price-tracker-api",
+  "version": "1.0.0",
+  "description": "API for price tracker system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "HaiHT",
+  "license": "ISC",
+  "dependencies" : {
+    "express" : "latest",
+    "mongoose" : "latest",
+    "body-parser" : "latest"
+  }
+}

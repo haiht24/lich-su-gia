@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    #container.col-xs-12
+        .header.col-xs-12
+            .logo.col-xs-2 logo here
+            .search-box.col-xs-8
+                span
+                    input.form-control(type='text', value='http://www.lazada.vn/balo-laptop-glado-cylinder-gc006-xam-2646052.html?ff=1&boost=1', placeholder='Nhập link sản phẩm')
+                    button.btn.btn-primary#search
+                        i.fa.fa-search
+            .register-box.col-xs-2
+                a(value='#') Đăng nhập
