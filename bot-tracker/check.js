@@ -143,6 +143,6 @@ var cronCheckLazada = function () {
     });
     CrawlCreateArrayUrl.queue(lazadaCats);
 };
-// cron.schedule('* */2 * * *', cronCheckLazada);
-cronCheckLazada();
-return;
+cron.schedule('* */2 * * *', cronCheckLazada);
+// cronCheckLazada();
+// return;
