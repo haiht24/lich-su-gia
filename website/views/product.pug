@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    #container.col-xs-12
+        .col-xs-8
+            span
+                //<h1>#{data.name}</h1>
+                h1#productName
+        //<canvas id="myChart" width="400" height="400"></canvas>
+        canvas#chartPriceHistory(width=400, height=400)
+    script.
+        var loadScript = 'product';

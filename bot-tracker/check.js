@@ -4,6 +4,7 @@ var config = require('./configs/config.json');
 var proxy = require('./configs/proxy.json');
 var proxyChecker = require('./app/models/proxy');
 var cron = require('node-cron');
+var fs = require('node-fs');
 
 //////////////////////////////// CONFIG ////////////////////////////////
 var rateLimit = config.rateLimit;
@@ -25,42 +26,49 @@ var CrawlGetData = new Crawler({
     callback : function (error, res, done) {
         if(error) console.log(error);
         else{
-            var $ = res.$;
-            var currentPage = $('.c-paging__link.c-paging__link-current').text().trim();
-            var objProduct = [];
-            $('.c-product-card').each(function (i, el) {
-                var box = $(this);
-                var href = box.find('.c-product-card__img-placeholder-inner').attr('href').trim();
-                // find product id match -123456.html
-                var m = href.match(/[-]\d{1,9}.html/g);
-                var productId = 0;
-                if(m){
-                    productId = m[0].toString().replace('.html', '').replace('-','');
-                }
-                var name = box.find('.c-product-card__name').text().trim();
-                var priceFinal = Number(box.find('.c-product-card__price-final').text().trim().replace(' VND', '').replace(/\./g,''));
-                var oldPrice = Number(box.find('.c-product-card__old-price').text().trim().replace(' VND', '').replace(/\./g,''));
-                var discount = box.find('.c-product-card__discount').text().trim();
-                product = {
-                    productId: parseInt(productId),
-                    name: name,
-                    href: href,
-                    history: {
-                        priceFinal: priceFinal,
-                        discount: discount,
-                        oldPrice: oldPrice,
-                        created_at: new Date()
+            try{
+                var $ = res.$;
+                var currentPage = $('.c-paging__link.c-paging__link-current').text().trim();
+                var objProduct = [];
+                $('.c-product-card').each(function (i, el) {
+                    var box = $(this);
+                    var href = box.find('.c-product-card__img-placeholder-inner').attr('href').trim();
+                    // find product id match -123456.html
+                    var m = href.match(/[-]\d{1,9}.html/g);
+                    var productId = 0;
+                    if(m){
+                        productId = m[0].toString().replace('.html', '').replace('-','');
                     }
-                };
-                objProduct.push(product);
-            });
-            console.log('page:'+currentPage+'|found product:'+objProduct.length, res.request.uri.href);
-            console.timeEnd('getData');
-            if(objProduct.length > 0){
-                for(var i = 0; i< objProduct.length; i++){
-                    checkProductExist(objProduct[i]);
+                    var name = box.find('.c-product-card__name').text().trim();
+                    var priceFinal = Number(box.find('.c-product-card__price-final').text().trim().replace(' VND', '').replace(/\./g,''));
+                    var oldPrice = Number(box.find('.c-product-card__old-price').text().trim().replace(' VND', '').replace(/\./g,''));
+                    var discount = box.find('.c-product-card__discount').text().trim();
+                    product = {
+                        productId: parseInt(productId),
+                        name: name,
+                        href: href,
+                        history: {
+                            priceFinal: priceFinal,
+                            discount: discount,
+                            oldPrice: oldPrice,
+                            created_at: new Date()
+                        }
+                    };
+                    objProduct.push(product);
+                });
+                console.log('page:'+currentPage+'|found product:'+objProduct.length, res.request.uri.href);
+                console.timeEnd('getData');
+                if(objProduct.length > 0){
+                    for(var i = 0; i< objProduct.length; i++){
+                        checkProductExist(objProduct[i]);
+                    }
+                    Product.insertMany(objProduct, {ordered: false}); // ordered = false => insert ignore duplicate
                 }
-                Product.insertMany(objProduct, {ordered: false}); // ordered = false => insert ignore duplicate
+            }catch (err){
+                fs.writeFile('error.text', err, null, function () {
+                    console.log('done write to file');
+                });
+                throw new Error(err);
             }
         }
         done();

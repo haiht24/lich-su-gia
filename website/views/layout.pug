@@ -1,13 +1,31 @@
 doctype html
 html
-  head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css')
+    head
+        title= title
+        link(rel='stylesheet', href='/stylesheets/style.css')
+        link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css')
+        script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js')
+    body
+        // header
+        #container.col-xs-12
+            .header.col-xs-12
+                .logo.col-xs-2 logo here
+                .search-box.col-xs-8
+                    div.input-group
+                        form(action='/lich-su-gia/3705613', id='frmSearch')
+                            input.form-control(type='text', value='http://www.lazada.vn/balo-laptop-glado-cylinder-gc006-xam-2646052.html?ff=1&boost=1', placeholder='Nhập link sản phẩm')
+                            span.input-group-btn
+                                button.btn.btn-secondary
+                                    i.fa.fa-search
 
-  body
-    block content
-    script(src='https://use.fontawesome.com/21718f2f70.js')
-    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
-    script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
-    script(src='javascripts/script.js')
+                .register-box.col-xs-2
+                    a(value='#') Đăng nhập
+        // content
+        block content
+        // footer
+
+        // scripts
+        script(src='https://use.fontawesome.com/21718f2f70.js')
+        script(src='//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js')
+        script(src='//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js')
+        script(src='/javascripts/script.js')
