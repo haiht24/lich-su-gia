@@ -25,8 +25,11 @@ $(document).ready(function () {
         }
 
         var ctx = $('#chartPriceHistory');
+
         var dataChart = {
             labels: labels,
+            responsive: true,
+            maintainAspectRatio: false,
             datasets: [
                 {
                     label: "My First dataset",
