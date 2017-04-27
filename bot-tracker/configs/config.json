@@ -1,5 +1,5 @@
 {
   "rateLimit": 0,
-  "maxConnections" : 20,
+  "maxConnections" : 5,
   "mongoDbConnectString" : "mongodb://127.0.0.1:27017/lazada"
 }
