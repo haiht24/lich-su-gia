@@ -109,7 +109,6 @@ console.time('getArrayUrl');
 
 //=====================//==========================//
 var cronCheckLazada = function () {
-    console.log('Start check Lazada every hour');
     var CrawlCreateArrayUrl = new Crawler({
         rateLimit: 0,
         maxConnections: 1,
@@ -169,6 +168,6 @@ var cronCheckLazada = function () {
         }, 3000);
     });
 };
-cron.schedule('0 */3 * * *', cronCheckLazada);
-// cronCheckLazada();
+// cron.schedule('0 */3 * * *', cronCheckLazada);
+cronCheckLazada();
 // return;
