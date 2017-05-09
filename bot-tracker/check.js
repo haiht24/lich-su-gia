@@ -69,7 +69,6 @@ var CrawlGetData = new Crawler({
 });
 CrawlGetData.on('drain',function(){
     setTimeout(function(){
-
         process.exit(0);
     }, 30000);
 });
@@ -122,27 +121,6 @@ var cronCheckLazada = function () {
             var a = {url: thisUrl, maxPage: maxPage};
             arrPage.push(a);
             console.log(thisUrl, maxPage);
-            // if(thisUrl === lastCat){
-            //     // finish get highest page, generate array contain urls will crawl
-            //     var data = [];
-            //     for(var i=0;i<arrPage.length;i++){
-            //         var mp = parseInt(arrPage[i].maxPage);
-            //         var u = arrPage[i].url;
-            //         for(var j=1;j<mp+1;j++){
-            //             data.push(u+j);
-            //         }
-            //     }
-            //     // console.log(data);
-            //     console.timeEnd('getArrayUrl');
-            //     console.time('getData');
-            //     console.log('===========================================================================');
-            //     try{
-            //         CrawlGetData.queue(data);
-            //     }catch (err){
-            //         throw new Error(err);
-            //     }
-            //
-            // }
 
             done();
         }
@@ -150,8 +128,6 @@ var cronCheckLazada = function () {
     CrawlCreateArrayUrl.queue(lazadaCats);
     CrawlCreateArrayUrl.on('drain',function(){
         setTimeout(function(){
-            // console.timeEnd('pushJob');
-            // process.exit(0);
             var data = [];
             for(var i=0;i<arrPage.length;i++){
                 var mp = parseInt(arrPage[i].maxPage);
@@ -160,10 +136,9 @@ var cronCheckLazada = function () {
                     data.push(u+j);
                 }
             }
-            // console.log(data);
             console.timeEnd('getArrayUrl');
-            console.time('getData');
             console.log('===========================================================================');
+            console.time('getData');
             CrawlGetData.queue(data);
         }, 3000);
     });
