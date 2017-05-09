@@ -28,8 +28,10 @@
 
                 <div class="center-align s12">
                     <div class="input-field s6">
-                        <input placeholder="Nhập link sản phẩm" type="text" >
-                        {{--<label for="first_name">First Name</label>--}}
+                        <form action="search">
+                            <input placeholder="Nhập link sản phẩm" type="text" name="search">
+                            {{--<label for="first_name">First Name</label>--}}
+                        </form>
                     </div>
                 </div>
 
