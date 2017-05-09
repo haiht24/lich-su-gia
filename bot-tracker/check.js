@@ -26,53 +26,52 @@ var CrawlGetData = new Crawler({
     callback : function (error, res, done) {
         if(error) console.log(error);
         else{
-            try{
-                var $ = res.$;
-                var currentPage = $('.c-paging__link.c-paging__link-current').text().trim();
-                var objProduct = [];
-                $('.c-product-card').each(function (i, el) {
-                    var box = $(this);
-                    var href = box.find('.c-product-card__img-placeholder-inner').attr('href').trim();
-                    // find product id match -123456.html
-                    var m = href.match(/[-]\d{1,9}.html/g);
-                    var productId = 0;
-                    if(m){
-                        productId = m[0].toString().replace('.html', '').replace('-','');
-                    }
-                    var name = box.find('.c-product-card__name').text().trim();
-                    var priceFinal = Number(box.find('.c-product-card__price-final').text().trim().replace(' VND', '').replace(/\./g,''));
-                    var oldPrice = Number(box.find('.c-product-card__old-price').text().trim().replace(' VND', '').replace(/\./g,''));
-                    var discount = box.find('.c-product-card__discount').text().trim();
-                    product = {
-                        productId: parseInt(productId),
-                        name: name,
-                        href: href,
-                        history: {
-                            priceFinal: priceFinal,
-                            discount: discount,
-                            oldPrice: oldPrice,
-                            created_at: new Date()
-                        }
-                    };
-                    objProduct.push(product);
-                });
-                console.log('page:'+currentPage+'|found product:'+objProduct.length, res.request.uri.href);
-                console.timeEnd('getData');
-                if(objProduct.length > 0){
-                    for(var i = 0; i< objProduct.length; i++){
-                        checkProductExist(objProduct[i]);
-                    }
-                    Product.insertMany(objProduct, {ordered: false}); // ordered = false => insert ignore duplicate
+            var $ = res.$;
+            var currentPage = $('.c-paging__link.c-paging__link-current').text().trim();
+            var objProduct = [];
+            $('.c-product-card').each(function (i, el) {
+                var box = $(this);
+                var href = box.find('.c-product-card__img-placeholder-inner').attr('href').trim();
+                // find product id match -123456.html
+                var m = href.match(/[-]\d{1,9}.html/g);
+                var productId = 0;
+                if(m){
+                    productId = m[0].toString().replace('.html', '').replace('-','');
                 }
-            }catch (err){
-                fs.writeFile('error.text', err, null, function () {
-                    console.log('done write to file');
-                });
-                throw new Error(err);
+                var name = box.find('.c-product-card__name').text().trim();
+                var priceFinal = Number(box.find('.c-product-card__price-final').text().trim().replace(' VND', '').replace(/\./g,''));
+                var oldPrice = Number(box.find('.c-product-card__old-price').text().trim().replace(' VND', '').replace(/\./g,''));
+                var discount = box.find('.c-product-card__discount').text().trim();
+                product = {
+                    productId: parseInt(productId),
+                    name: name,
+                    href: href,
+                    history: {
+                        priceFinal: priceFinal,
+                        discount: discount,
+                        oldPrice: oldPrice,
+                        created_at: new Date()
+                    }
+                };
+                objProduct.push(product);
+            });
+            console.log('page:'+currentPage+'|found product:'+objProduct.length, res.request.uri.href);
+            console.timeEnd('getData');
+            if(objProduct.length > 0){
+                for(var i = 0; i< objProduct.length; i++){
+                    checkProductExist(objProduct[i]);
+                }
+                Product.insertMany(objProduct, {ordered: false}); // ordered = false => insert ignore duplicate
             }
         }
         done();
     }
+});
+CrawlGetData.on('drain',function(){
+    setTimeout(function(){
+
+        process.exit(0);
+    }, 30000);
 });
 
 var checkProductExist = function (product) {
@@ -124,32 +123,51 @@ var cronCheckLazada = function () {
             var a = {url: thisUrl, maxPage: maxPage};
             arrPage.push(a);
             console.log(thisUrl, maxPage);
-            if(thisUrl === lastCat){
-                // finish get highest page, generate array contain urls will crawl
-                var data = [];
-                for(var i=0;i<arrPage.length;i++){
-                    var mp = parseInt(arrPage[i].maxPage);
-                    var u = arrPage[i].url;
-                    for(var j=1;j<mp+1;j++){
-                        data.push(u+j);
-                    }
-                }
-                // console.log(data);
-                console.timeEnd('getArrayUrl');
-                console.time('getData');
-                console.log('===========================================================================');
-                try{
-                    CrawlGetData.queue(data);
-                }catch (err){
-                    throw new Error(err);
-                }
-
-            }
+            // if(thisUrl === lastCat){
+            //     // finish get highest page, generate array contain urls will crawl
+            //     var data = [];
+            //     for(var i=0;i<arrPage.length;i++){
+            //         var mp = parseInt(arrPage[i].maxPage);
+            //         var u = arrPage[i].url;
+            //         for(var j=1;j<mp+1;j++){
+            //             data.push(u+j);
+            //         }
+            //     }
+            //     // console.log(data);
+            //     console.timeEnd('getArrayUrl');
+            //     console.time('getData');
+            //     console.log('===========================================================================');
+            //     try{
+            //         CrawlGetData.queue(data);
+            //     }catch (err){
+            //         throw new Error(err);
+            //     }
+            //
+            // }
 
             done();
         }
     });
     CrawlCreateArrayUrl.queue(lazadaCats);
+    CrawlCreateArrayUrl.on('drain',function(){
+        setTimeout(function(){
+            // console.timeEnd('pushJob');
+            // process.exit(0);
+            var data = [];
+            for(var i=0;i<arrPage.length;i++){
+                var mp = parseInt(arrPage[i].maxPage);
+                var u = arrPage[i].url;
+                for(var j=1;j<mp+1;j++){
+                    data.push(u+j);
+                }
+            }
+            // console.log(data);
+            console.timeEnd('getArrayUrl');
+            console.time('getData');
+            console.log('===========================================================================');
+            CrawlGetData.queue(data);
+        }, 3000);
+    });
 };
 cron.schedule('0 */3 * * *', cronCheckLazada);
 // cronCheckLazada();
