@@ -18,7 +18,30 @@ producSchema.pre('save', function(next) {
     // if created_at doesn't exist, add to that field
     if (!this.created_at)
         this.created_at = currentDate;
-    next();
+
+    var self = this;
+    var id = self.productId;
+    var newPrice = self.history.priceFinal;
+    Product.find({productId : self.productId}, function (err, prd) {
+        if (!prd.length){
+            next();
+        }else{
+            // if exist then push
+            var historyLength = prd.history.length;
+            var lastPrice = prd.history[historyLength - 1].priceFinal;
+            // console.log(id,lastPrice, newPrice, lastPrice === newPrice);
+            if(lastPrice !== newPrice){
+                // push new price
+                Product.update(
+                    {productId: id},
+                    { $push: { history: self.history } }, function (err) {
+                        if(err) console.log(err);
+                        else console.log(id + ' changed');
+                    }
+                );
+            }
+        }
+    });
 });
 producSchema.methods.getLazadaCategories = function() {
     var request = require('request');
