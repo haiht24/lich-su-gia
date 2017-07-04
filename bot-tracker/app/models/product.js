@@ -29,13 +29,18 @@ producSchema.pre('save', function(next) {
             // if exist then push
             try{
                 var historyLength = prd.history.length;
+                if(lastPrice !== newPrice){
+                    // push new price
+                    Product.update(
+                        {productId: id},
+                        { $push: { history: self.history } }, function (err) {
+                            if(err) console.log(err);
+                            else console.log(id + ' changed');
+                        }
+                    );
+                }
             }catch (ex){
                 console.log('ERROR');
-                console.log(prd);
-            }
-            var lastPrice = prd.history[historyLength - 1].priceFinal;
-            // console.log(id,lastPrice, newPrice, lastPrice === newPrice);
-            if(lastPrice !== newPrice){
                 // push new price
                 Product.update(
                     {productId: id},
@@ -45,6 +50,18 @@ producSchema.pre('save', function(next) {
                     }
                 );
             }
+            // var lastPrice = prd.history[historyLength - 1].priceFinal;
+            // // console.log(id,lastPrice, newPrice, lastPrice === newPrice);
+            // if(lastPrice !== newPrice){
+            //     // push new price
+            //     Product.update(
+            //         {productId: id},
+            //         { $push: { history: self.history } }, function (err) {
+            //             if(err) console.log(err);
+            //             else console.log(id + ' changed');
+            //         }
+            //     );
+            // }
         }
     });
 });
