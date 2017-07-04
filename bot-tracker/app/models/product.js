@@ -27,7 +27,12 @@ producSchema.pre('save', function(next) {
             next();
         }else{
             // if exist then push
-            var historyLength = prd.history.length;
+            try{
+                var historyLength = prd.history.length;
+            }catch (ex){
+                console.log('ERROR');
+                console.log(prd);
+            }
             var lastPrice = prd.history[historyLength - 1].priceFinal;
             // console.log(id,lastPrice, newPrice, lastPrice === newPrice);
             if(lastPrice !== newPrice){
