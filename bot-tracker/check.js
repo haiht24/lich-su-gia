@@ -148,6 +148,6 @@ var cronCheckLazada = function () {
         }, 3000);
     });
 };
-cron.schedule('0 */3 * * *', cronCheckLazada);
-// cronCheckLazada();
+// cron.schedule('0 */3 * * *', cronCheckLazada);
+cronCheckLazada();
 // return;

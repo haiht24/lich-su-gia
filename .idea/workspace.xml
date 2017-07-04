@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="648b121a-a92e-42b1-b36a-6a603ff22f5c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot-tracker/app/models/product.js" afterPath="$PROJECT_DIR$/bot-tracker/app/models/product.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bot-tracker/check.js" afterPath="$PROJECT_DIR$/bot-tracker/check.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,11 +27,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="check.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="check.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bot-tracker/check.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-274">
-              <caret line="61" column="40" lean-forward="false" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+            <state relative-caret-position="352">
+              <caret line="152" column="10" lean-forward="true" selection-start-line="152" selection-start-column="10" selection-end-line="152" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -83,11 +83,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="product.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="product.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/bot-tracker/app/models/product.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="60" column="50" lean-forward="false" selection-start-line="60" selection-start-column="50" selection-end-line="60" selection-end-column="50" />
+            <state relative-caret-position="260">
+              <caret line="56" column="34" lean-forward="true" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -153,9 +153,9 @@
         <option value="$PROJECT_DIR$/website/gulpfile.js" />
         <option value="$PROJECT_DIR$/website/resources/assets/sass/app.scss" />
         <option value="$PROJECT_DIR$/website/resources/views/product.blade.php" />
-        <option value="$PROJECT_DIR$/bot-tracker/check.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/bot-tracker/app/models/product.js" />
+        <option value="$PROJECT_DIR$/bot-tracker/check.js" />
       </list>
     </option>
   </component>
@@ -552,7 +552,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="48711000" />
+    <option name="totallyTimeSpent" value="48775000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -898,18 +898,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bot-tracker/check.js">
+    <entry file="file://$PROJECT_DIR$/bot-tracker/app/models/product.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-274">
-          <caret line="61" column="40" lean-forward="false" selection-start-line="61" selection-start-column="40" selection-end-line="61" selection-end-column="40" />
+        <state relative-caret-position="260">
+          <caret line="56" column="34" lean-forward="true" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="34" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bot-tracker/app/models/product.js">
+    <entry file="file://$PROJECT_DIR$/bot-tracker/check.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="352">
-          <caret line="60" column="50" lean-forward="false" selection-start-line="60" selection-start-column="50" selection-end-line="60" selection-end-column="50" />
+          <caret line="152" column="10" lean-forward="true" selection-start-line="152" selection-start-column="10" selection-end-line="152" selection-end-column="10" />
           <folding />
         </state>
       </provider>
