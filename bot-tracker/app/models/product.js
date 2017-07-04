@@ -19,51 +19,51 @@ producSchema.pre('save', function(next) {
     if (!this.created_at)
         this.created_at = currentDate;
 
-    var self = this;
-    var id = self.productId;
-    var newPrice = self.history.priceFinal;
-    Product.find({productId : self.productId}, function (err, prd) {
-        if (!prd.length){
-            next();
-        }else{
-            // if exist then push
-            try{
-                var historyLength = prd.history.length;
-                if(lastPrice !== newPrice){
-                    // push new price
-                    Product.update(
-                        {productId: id},
-                        { $push: { history: self.history } }, function (err) {
-                            if(err) console.log(err);
-                            else console.log(id + ' changed');
-                        }
-                    );
-                }
-            }catch (ex){
-                console.log('ERROR');
-                // push new price
-                Product.update(
-                    {productId: id},
-                    { $push: { history: self.history } }, function (err) {
-                        if(err) console.log(err);
-                        else console.log(id + ' changed');
-                    }
-                );
-            }
-            // var lastPrice = prd.history[historyLength - 1].priceFinal;
-            // // console.log(id,lastPrice, newPrice, lastPrice === newPrice);
-            // if(lastPrice !== newPrice){
-            //     // push new price
-            //     Product.update(
-            //         {productId: id},
-            //         { $push: { history: self.history } }, function (err) {
-            //             if(err) console.log(err);
-            //             else console.log(id + ' changed');
-            //         }
-            //     );
-            // }
-        }
-    });
+    // var self = this;
+    // var id = self.productId;
+    // var newPrice = self.history.priceFinal;
+    // Product.find({productId : self.productId}, function (err, prd) {
+    //     if (!prd.length){
+    //         next();
+    //     }else{
+    //         // if exist then push
+    //         try{
+    //             var historyLength = prd.history.length;
+    //             if(lastPrice !== newPrice){
+    //                 // push new price
+    //                 Product.update(
+    //                     {productId: id},
+    //                     { $push: { history: self.history } }, function (err) {
+    //                         if(err) console.log(err);
+    //                         else console.log(id + ' changed');
+    //                     }
+    //                 );
+    //             }
+    //         }catch (ex){
+    //             console.log('ERROR');
+    //             // push new price
+    //             Product.update(
+    //                 {productId: id},
+    //                 { $push: { history: self.history } }, function (err) {
+    //                     if(err) console.log(err);
+    //                     else console.log(id + ' changed');
+    //                 }
+    //             );
+    //         }
+    //         // var lastPrice = prd.history[historyLength - 1].priceFinal;
+    //         // // console.log(id,lastPrice, newPrice, lastPrice === newPrice);
+    //         // if(lastPrice !== newPrice){
+    //         //     // push new price
+    //         //     Product.update(
+    //         //         {productId: id},
+    //         //         { $push: { history: self.history } }, function (err) {
+    //         //             if(err) console.log(err);
+    //         //             else console.log(id + ' changed');
+    //         //         }
+    //         //     );
+    //         // }
+    //     }
+    // });
 });
 producSchema.methods.getLazadaCategories = function() {
     var request = require('request');

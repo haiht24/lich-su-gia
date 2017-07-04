@@ -60,11 +60,11 @@ var CrawlGetData = new Crawler({
             if(objProduct.length > 0){
                 // Update jobs to epl
                 for(var i = 0; i< objProduct.length; i++){
-                    // checkProductExist(objProduct[i]);
-                    var newPrd = new Product(objProduct[i]);
-                    newPrd.save(function (err) {
-                        if(err) throw err;
-                    })
+                    checkProductExist(objProduct[i]);
+                    // var newPrd = new Product(objProduct[i]);
+                    // newPrd.save(function (err) {
+                    //     if(err) throw err;
+                    // })
                 }
                 Product.insertMany(objProduct, {ordered: false}); // ordered = false => insert ignore duplicate
             }
@@ -148,6 +148,6 @@ var cronCheckLazada = function () {
         }, 3000);
     });
 };
-// cron.schedule('0 */3 * * *', cronCheckLazada);
-cronCheckLazada();
+cron.schedule('0 */3 * * *', cronCheckLazada);
+// cronCheckLazada();
 // return;
